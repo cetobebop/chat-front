@@ -1,0 +1,28 @@
+// app global css in SCSS form
+
+:root {
+  --panel-header-background: #202c33;
+  --border-contact: rgba(134, 150, 160, 0.15);
+  --primary-color: #d1d7db;
+  --my-message-color: #075e54;
+  --other-message-color: #313d44;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #1d1d1d;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
