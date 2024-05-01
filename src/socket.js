@@ -6,8 +6,7 @@ import { messagesEvents } from "./events/messages";
 
 export const state = ref(null);
 
-const URL =
-  process.env.NODE_ENV === "production" ? undefined : "http://localhost:3000";
+const URL = process.env.URL_SERVER;
 
 export const socket = io(URL, {
   autoConnect: false,

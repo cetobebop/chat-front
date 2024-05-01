@@ -10,7 +10,7 @@
 
 const { configure } = require("quasar/wrappers");
 
-module.exports = configure(function (/* ctx */) {
+module.exports = configure(function (ctx) {
   return {
     eslint: {
       // fix: true,
@@ -62,7 +62,11 @@ module.exports = configure(function (/* ctx */) {
 
       // publicPath: '/',
       // analyze: true,
-      // env: {},
+      env: {
+        URL_SERVER: ctx.dev
+          ? "http://localhost:3000"
+          : "https://chat-api-z7uu.onrender.com",
+      },
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,
