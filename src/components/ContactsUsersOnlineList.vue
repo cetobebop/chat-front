@@ -24,8 +24,6 @@
         <q-item-section>
           <q-item-label lines="1">{{ user.username }}</q-item-label>
         </q-item-section>
-
-        <q-item-section side top> 1 min ago </q-item-section>
       </q-item>
     </q-list>
 
@@ -40,6 +38,7 @@ import { useMessageStore } from "src/stores/messages";
 import { useChatStore } from "src/stores/chat";
 import { receiverHasChat } from "src/composables/receiverHasChat";
 import { useMobileNavigationStore } from "src/stores/mobileNavigation";
+import { useUnreadMessagesStore } from "src/stores/unreadMessgesStore";
 
 const props = defineProps({
   usersOnline: Object,
@@ -48,6 +47,7 @@ const props = defineProps({
 const messagesStore = useMessageStore();
 const chatStore = useChatStore();
 const mobileNavigationStore = useMobileNavigationStore();
+const unreadMessagesStore = useUnreadMessagesStore();
 
 const select = ref("");
 
@@ -59,6 +59,7 @@ function selectAChat(user) {
   const receiverChat = receiverHasChat(user);
   if (receiverChat) {
     chatStore.setChatSelect(user, receiverChat);
+    unreadMessagesStore.removeUnreadChats(receiverChat._id);
     messagesStore.obtainMessages(receiverChat._id);
     return;
   }

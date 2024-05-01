@@ -11,21 +11,14 @@
           >Escribe un mensaje</span
         >
         <div
-          style="position: absolute; bottom: 10px"
+          style="position: absolute; bottom: 11px"
           @input="textAreaAdaptable()"
           ref="textarea"
-          contenteditable="true"
+          contenteditable="plaintext-only"
           class="textarea"
         ></div>
       </div>
 
-      <!-- <input
-      max="200"
-      placeholder="Escribe un mensaje"
-      id="input-message"
-      type="text"
-      v-model="msg"
-    /> -->
       <q-btn
         type="submit"
         style="color: var(--primary-color)"
@@ -39,7 +32,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 
 import { useMessageStore } from "src/stores/messages";
 
@@ -96,9 +89,11 @@ function letterLimit() {
 }
 
 function onSubmit() {
+  if (!textarea.value.textContent) return;
   messageStore.sentMessage(textarea.value?.textContent, props.chatId);
   textarea.value.textContent = "";
   isEmptyTheDiv();
+  textAreaAdaptable();
 }
 </script>
 
@@ -107,12 +102,13 @@ function onSubmit() {
   width: 85%;
   background-color: #2a3942;
   max-height: 150px;
+
   border: none;
   outline: none;
   overflow: auto;
   resize: none;
   border-radius: 5px;
-  padding: 10px 15px;
+  padding: 9px 15px;
   color: white;
   z-index: 10;
   scrollbar-gutter: stable both-edges;
@@ -122,7 +118,7 @@ function onSubmit() {
 .placeholder {
   opacity: 0.7;
   z-index: 10;
-  padding: 10px 15px;
+  padding: 9px 15px;
   pointer-events: none;
 }
 
@@ -136,18 +132,6 @@ function onSubmit() {
   display: flex;
   align-items: center;
   padding: 0 25px 0 25px;
-}
-
-#input-message {
-  height: 65%;
-  width: 95%;
-  border-radius: 5px;
-  outline: none;
-  border: none;
-  background-color: #2a3942;
-  padding: 3px 15px;
-  caret-color: var(--primary-color);
-  color: white;
 }
 
 input::placeholder {

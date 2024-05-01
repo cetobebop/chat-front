@@ -4,6 +4,7 @@ import { socket } from "src/socket";
 import { useUserStore } from "./user";
 import { useChatStore } from "./chat";
 import { reverseRoles } from "src/composables/reverseRoles";
+import moment from "moment";
 
 export const useMessageStore = defineStore("messageStore", () => {
   const receiver = ref(null);
@@ -19,13 +20,12 @@ export const useMessageStore = defineStore("messageStore", () => {
 
   function setAllIndexedChatMessages(idChat, messages) {
     if (allIndexedChatMessages.value[idChat]) {
-      lastMessagesIndexed.value[idChat] = messages.content;
+      lastMessagesIndexed.value[idChat] = messages;
       allIndexedChatMessages.value[idChat].unshift(messages);
-      return;
+    } else {
+      allIndexedChatMessages.value[idChat] = messages;
+      lastMessagesIndexed.value[idChat] = messages[0];
     }
-
-    lastMessagesIndexed.value[idChat] = messages[0].content;
-    allIndexedChatMessages.value[idChat] = messages;
   }
 
   function getLastMessage(idChat) {
@@ -41,15 +41,45 @@ export const useMessageStore = defineStore("messageStore", () => {
     return allIndexedChatMessages.value[idChat];
   }
 
+  function receivedMessages(chats) {
+    let chatsId;
+
+    if (Array.isArray(chats)) {
+      chatsId = chats.map((c) => c._id);
+    } else {
+      chatsId = [chats];
+    }
+
+    socket.emit("client:messages-received", chatsId);
+  }
+
+  function readMessages(chatId) {
+    socket.emit("client:messages-read", [chatId]);
+  }
+
+  function changeMessageStatus(idChat) {
+    if (allIndexedChatMessages.value[idChat]) {
+      allIndexedChatMessages.value[idChat][0].status = "sent";
+    }
+  }
+
+  function modifyStatus(chatId, newStatus) {
+    const arr = newStatus === "read" ? ["sent", "received"] : ["sent"];
+
+    if (allIndexedChatMessages.value[chatId]) {
+      allIndexedChatMessages.value[chatId].map((msg) => {
+        if (arr.includes(msg.status)) msg.status = newStatus;
+      });
+    }
+  }
+
   function sentMessage(msg, chatId) {
     const data = {
       content: msg,
       sender: useStore.myUser._id,
       receiver: receiver.value,
-      status: {
-        idArr: allIndexedChatMessages.value.length,
-        sent: false,
-      },
+      status: undefined,
+      createdAt: moment().format(),
     };
 
     if (chatId) setAllIndexedChatMessages(chatId, data);
@@ -62,12 +92,14 @@ export const useMessageStore = defineStore("messageStore", () => {
         msg,
       },
       (res) => {
-        console.log(res);
         if (res.status && res.newChat) {
           const chat = reverseRoles(res.newChat);
           setAllIndexedChatMessages(chat._id, [data]);
           chatStore.setNewChat(chat);
           chatStore.setChatSelect(chat.receiver, res.newChat);
+          changeMessageStatus(chat._id);
+        } else if (res.status) {
+          changeMessageStatus(chatId);
         }
       }
     );
@@ -83,5 +115,8 @@ export const useMessageStore = defineStore("messageStore", () => {
     getMessages,
     setAllIndexedChatMessages,
     getLastMessage,
+    receivedMessages,
+    readMessages,
+    modifyStatus,
   };
 });

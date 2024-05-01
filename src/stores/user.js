@@ -27,7 +27,7 @@ export const useUserStore = defineStore("user", () => {
   }
 
   function findMe() {
-    if (otherConnectedUsers.value[myUser.value._id]) {
+    if (otherConnectedUsers.value[myUser.value?._id]) {
       otherConnectedUsers.value[myUser.value._id].username = "Yo";
       return;
     }

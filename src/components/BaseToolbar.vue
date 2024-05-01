@@ -4,7 +4,6 @@
       background: var(--panel-header-background);
       height: 60px;
       padding: 7px 0 7px 10px;
-      min-width: 250px;
     "
     class="row items-center q-pr-sm"
   >
@@ -36,8 +35,6 @@ defineProps({
   avatar: String,
   arrowBack: Boolean,
 });
-
-
 
 const movileNavigationStore = useMobileNavigationStore();
 

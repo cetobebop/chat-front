@@ -4,12 +4,16 @@
       :avatar="userStore?.myUser?.userAvatar"
       :title="userStore?.myUser?.username"
     ></base-toolbar>
-    <contacts-users-scroll-container></contacts-users-scroll-container>
-    <contacts-tab></contacts-tab>
+    <contacts-users-scroll-container
+      :maxWidth="maxWidth"
+    ></contacts-users-scroll-container>
+    <contacts-tab :maxWidth="maxWidth"></contacts-tab>
+    <q-resize-observer @resize="onResize" />
   </div>
 </template>
 
 <script setup>
+import { ref } from "vue";
 import BaseToolbar from "./BaseToolbar.vue";
 import ContactsTab from "./ContactsTab.vue";
 import ContactsUsersScrollContainer from "./ContactsUsersScrollContainer.vue";
@@ -17,6 +21,12 @@ import ContactsUsersScrollContainer from "./ContactsUsersScrollContainer.vue";
 import { useUserStore } from "src/stores/user";
 
 const userStore = useUserStore();
+
+const maxWidth = ref(null);
+
+function onResize(size) {
+  maxWidth.value = size.width;
+}
 </script>
 
 <style scoped>

@@ -13,12 +13,17 @@
     "
     class="q-px-md"
   >
-    <template v-for="(msg, i) in messagesList" :key="i">
+    <template
+      v-for="(msg, i) in messageStore.getMessages(props.chatId)"
+      :key="msg._id"
+    >
       <messages-chat-bubble
         :content="msg.content"
         :sent="true"
         :first="true"
         v-if="isMyMessage(msg) && !previouMsgHasSameIdSender(msg, i)"
+        :status="msg.status"
+        :date="msg.createdAt"
       ></messages-chat-bubble>
 
       <messages-chat-bubble
@@ -26,6 +31,8 @@
         :sent="true"
         :first="false"
         v-if="isMyMessage(msg) && previouMsgHasSameIdSender(msg, i)"
+        :status="msg.status"
+        :date="msg.createdAt"
       ></messages-chat-bubble>
 
       <messages-chat-bubble
@@ -33,6 +40,7 @@
         :sent="false"
         :first="true"
         v-if="!isMyMessage(msg) && !previouMsgHasSameIdSender(msg, i)"
+        :date="msg.createdAt"
       ></messages-chat-bubble>
 
       <messages-chat-bubble
@@ -40,7 +48,15 @@
         :sent="false"
         :first="false"
         v-if="!isMyMessage(msg) && previouMsgHasSameIdSender(msg, i)"
+        :date="msg.createdAt"
       ></messages-chat-bubble>
+
+      <messages-date-stamp
+        v-if="isTheSameDate(msg.createdAt, i)"
+        :id="msg._id"
+        :i="i"
+        :date="msg.createdAt"
+      ></messages-date-stamp>
     </template>
   </div>
 </template>
@@ -49,35 +65,63 @@
 import { computed, ref, onMounted, watchEffect } from "vue";
 
 import { useMessageStore } from "src/stores/messages";
-import { useUserStore } from "src/stores/user";
 import MessagesChatBubble from "./MessagesChatBubble.vue";
+import { isMyMessage } from "src/composables/isMyMessage";
+import MessagesDateStamp from "./MessagesDateStamp.vue";
+import { dateDifferenceFromNow } from "src/composables/dateDifferenceFromNow";
 
 const props = defineProps({
   chatId: String,
   containerInputHeight: String,
 });
 
+let dateBuffer;
 const container = ref(null);
 const messageStore = useMessageStore();
-const userStore = useUserStore();
 
-const messagesList = computed(() => messageStore.getMessages(props.chatId));
+const messagesList = computed(() => {
+  return messageStore.getMessages(props.chatId);
+});
 
 function previouMsgHasSameIdSender(msgActual, i) {
-  return (
-    messageStore.getMessages(props.chatId)[i + 1]?.sender === msgActual.sender
-  );
+  const result =
+    messageStore.getMessages(props.chatId)[i + 1]?.sender === msgActual.sender;
+
+  return result;
 }
+
+function isTheSameDate(date, i) {
+  const proxDate = messageStore.getMessages(props.chatId)[i + 1]?.createdAt;
+
+  let result;
+  const proxDateFormat = dateDifferenceFromNow(proxDate);
+
+  if (!i) {
+    dateBuffer = dateDifferenceFromNow(date);
+  }
+
+  if (!proxDate) {
+    result = true;
+  } else if (proxDateFormat !== dateBuffer) {
+    result = true;
+    dateBuffer = proxDateFormat;
+  } else result = false;
+
+  return result;
+}
+
+watchEffect(() => {
+  if (messagesList.value) {
+    messagesList.value.length;
+    messageStore.readMessages(props.chatId);
+  }
+});
 
 onMounted(() => {
   watchEffect(() => {
     container.value.style.height = `calc(100vh - 60px - ${props.containerInputHeight})`;
   });
 });
-
-const isMyMessage = (msg) => {
-  return userStore.myUser._id === msg.sender;
-};
 </script>
 
 <style scoped>

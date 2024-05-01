@@ -3,30 +3,66 @@
     <div class="msg izq first-izq" v-if="!sent && first">
       <span class="triangle-izq"></span>
       {{ content }}
+      <div>
+        <span class="timestamp brand-der">{{ messageDate(date) }}</span>
+      </div>
     </div>
 
-    <div class="msg izq" v-if="!sent && !first">{{ content }}</div>
+    <div class="msg izq" v-if="!sent && !first">
+      {{ content }}
+      <div>
+        <span class="timestamp brand-der">{{ messageDate(date) }}</span>
+      </div>
+    </div>
 
     <div class="msg der first-der" v-if="sent && first">
       <span class="triangle-der"> </span>
       {{ content }}
+      <div>
+        <span class="brand-der">
+          <span class="timestamp" style="margin-right: 3px">{{
+            messageDate(date)
+          }}</span>
+          <messages-message-status :status="status"></messages-message-status
+        ></span>
+      </div>
     </div>
 
-    <div class="msg der" v-if="sent && !first">{{ content }}</div>
+    <div class="msg der" v-if="sent && !first">
+      {{ content }}
+      <div>
+        <span class="brand-der">
+          <span class="timestamp" style="margin-right: 3px">{{
+            messageDate(date)
+          }}</span>
+          <messages-message-status :status="status"></messages-message-status
+        ></span>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
+import moment from "moment";
+import MessagesMessageStatus from "./MessagesMessageStatus.vue";
+
 defineProps({
-  content: String,
   sent: Boolean,
+  content: String,
+  status: String,
   first: Boolean,
+  date: String,
 });
+
+const messageDate = (date) => {
+  return moment(date).format("LT").replace("AM", "a.m.").replace("PM", "p.m.");
+};
 </script>
 
 <style scoped>
 .msg {
   position: relative;
+  word-wrap: break-word;
   width: fit-content;
   max-width: 60%;
   color: #fff;
@@ -50,12 +86,12 @@ defineProps({
 
 .first-izq {
   border-radius: 0 10px 10px;
-  margin-top: 2px;
+  margin-top: 8px;
 }
 
 .first-der {
   border-radius: 10px 0px 10px 10px;
-  margin-top: 2px;
+  margin-top: 8px;
 }
 
 .triangle-izq {
@@ -80,5 +116,14 @@ defineProps({
   display: inline-block;
   clip-path: polygon(0 100%, 0 0, 100% 0);
   border-radius: 0px 20px 40px 0px;
+}
+
+.timestamp {
+  opacity: 0.6;
+  font-weight: 300;
+  font-size: 0.8em;
+}
+.brand-der {
+  float: right;
 }
 </style>

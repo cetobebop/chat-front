@@ -9,6 +9,7 @@
     ></contacts-users-online-list>
 
     <contacts-users-contacts-list
+      :maxWidth="maxWidth"
       v-if="tabStore.tab === `chats`"
     ></contacts-users-contacts-list>
   </q-scroll-area>
@@ -20,6 +21,10 @@ import ContactsUsersContactsList from "./ContactsUsersContactsList.vue";
 
 import { useUserStore } from "src/stores/user";
 import { useTabStore } from "src/stores/tab";
+
+defineProps({
+  maxWidth: Number,
+});
 
 const tabStore = useTabStore();
 const userStore = useUserStore();
