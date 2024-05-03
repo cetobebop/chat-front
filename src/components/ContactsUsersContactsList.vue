@@ -28,12 +28,13 @@
               v-if="isMine(chat)"
               :status="lastMessageStatus(chat)"
             ></messages-message-status>
+
             <span v-if="!unreadMessagesCount(chat._id)" class="readMessages">
               {{ lastMessageContent(chat) }}</span
             >
             <span v-if="unreadMessagesCount(chat._id)" class="unreadMessages">
-              {{ lastMessageContent(chat) }}</span
-            >
+              {{ lastMessageContent(chat) }}
+            </span>
           </q-item-label>
         </q-item-section>
 

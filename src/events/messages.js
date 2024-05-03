@@ -14,7 +14,7 @@ export function messagesEvents(socket) {
 
     if (messagesStore.allIndexedChatMessages[chatId])
       messagesStore.setAllIndexedChatMessages(chatId, msg);
-    else messagesStore.lastMessagesIndexed[chatId] = msg.content;
+    else messagesStore.lastMessagesIndexed[chatId] = msg;
   });
 
   socket.on("server:new-room-new-message", (chatId, msg) => {
