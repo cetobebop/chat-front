@@ -34,6 +34,11 @@ function onResize(size) {
   border-right: 1px solid var(--border-contact);
 }
 
+#chat-container-left {
+  height: calc(100vh - 60px);
+  font-size: 0.9em;
+}
+
 @media (max-width: 600px) {
   #chat-container-left {
     height: 100vh;

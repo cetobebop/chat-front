@@ -69,6 +69,7 @@ import MessagesChatBubble from "./MessagesChatBubble.vue";
 import { isMyMessage } from "src/composables/isMyMessage";
 import MessagesDateStamp from "./MessagesDateStamp.vue";
 import { dateDifferenceFromNow } from "src/composables/dateDifferenceFromNow";
+import { useUnreadMessagesStore } from "src/stores/unreadMessgesStore";
 
 const props = defineProps({
   chatId: String,
@@ -78,6 +79,7 @@ const props = defineProps({
 let dateBuffer;
 const container = ref(null);
 const messageStore = useMessageStore();
+const unreadMessagesStore = useUnreadMessagesStore();
 
 const messagesList = computed(() => {
   return messageStore.getMessages(props.chatId);
@@ -114,12 +116,13 @@ watchEffect(() => {
   if (messagesList.value) {
     messagesList.value.length;
     messageStore.readMessages(props.chatId);
+    unreadMessagesStore.removeUnreadChats(props.chatId);
   }
 });
 
 onMounted(() => {
   watchEffect(() => {
-    container.value.style.height = `calc(100vh - 60px - ${props.containerInputHeight})`;
+    container.value.style.height = `calc(100vh - 60px - ${props.containerInputHeight} - 60px)`;
   });
 });
 </script>

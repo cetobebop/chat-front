@@ -24,4 +24,9 @@ const chatStore = useChatStore();
 const mobileNavigationStore = useMobileNavigationStore();
 </script>
 
-<style></style>
+<style scope>
+.hola {
+  height: 1000px !important;
+  width: 1000px;
+}
+</style>

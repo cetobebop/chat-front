@@ -13,6 +13,7 @@
         <div
           style="position: absolute; bottom: 11px"
           @input="textAreaAdaptable()"
+          @paste="handlePaste"
           ref="textarea"
           contenteditable="plaintext-only"
           class="textarea"
@@ -70,6 +71,18 @@ function textAreaAdaptable() {
   emit("container-input-height", container.value.clientHeight);
 }
 
+function handlePaste(event) {
+  const pastedText = (event.clipboardData || window.clipboardData).getData(
+    "text"
+  );
+
+  const totalLength = textarea.value?.textContent?.length + pastedText.length;
+
+  if (totalLength > 700) {
+    event.preventDefault();
+  }
+}
+
 function letterLimit() {
   if (textarea.value?.textContent?.length > 700) {
     textarea.value.textContent = textarea.value.textContent.substring(
@@ -102,10 +115,10 @@ function onSubmit() {
   width: 85%;
   background-color: #2a3942;
   max-height: 150px;
-
+  overflow-wrap: break-word;
   border: none;
   outline: none;
-  overflow: auto;
+  overflow-y: auto;
   resize: none;
   border-radius: 5px;
   padding: 9px 15px;
