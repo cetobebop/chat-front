@@ -122,7 +122,7 @@ watchEffect(() => {
 
 onMounted(() => {
   watchEffect(() => {
-    container.value.style.height = `calc(100vh - 60px - ${props.containerInputHeight} - 60px)`;
+    container.value.style.height = `calc(100vh - 60px - ${props.containerInputHeight})`;
   });
 });
 </script>
