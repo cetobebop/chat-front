@@ -17,9 +17,22 @@ export function roomsEvents(socket) {
     chatStore.obtainChatInformation(chats);
     unreadMessagesStore.initIndexedUnreadMessages(unreadMessages);
   });
+
   socket.on("server:new-room", (chat) => {
     if (!chatStore) chatStore = useChatStore();
 
     chatStore.setNewChat(chat);
+  });
+
+  socket.on("server:user-is-writing", (chatId) => {
+    console.log("usuario " + chatId, " esta escribiendo");
+    if (!chatStore) chatStore = useChatStore();
+    chatStore.setWritingBand(chatId);
+  });
+
+  socket.on("server:user-stopped-writing", (chatId) => {
+    console.log("usuario " + chatId, " se detuvo");
+    if (!chatStore) chatStore = useChatStore();
+    chatStore.setWritingBand(chatId);
   });
 }

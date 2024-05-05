@@ -24,16 +24,22 @@
         <q-item-section>
           <q-item-label lines="1">{{ chat.receiver.username }}</q-item-label>
           <q-item-label caption lines="1" class="text-white">
-            <messages-message-status
-              v-if="isMine(chat)"
-              :status="lastMessageStatus(chat)"
-            ></messages-message-status>
+            <contacts-users-contacts-list-is-writing-stamp
+              v-if="chatStore.getWritingBand(chat._id)"
+            ></contacts-users-contacts-list-is-writing-stamp>
 
-            <span v-if="!unreadMessagesCount(chat._id)" class="readMessages">
-              {{ lastMessageContent(chat) }}</span
-            >
-            <span v-if="unreadMessagesCount(chat._id)" class="unreadMessages">
-              {{ lastMessageContent(chat) }}
+            <span v-if="!chatStore.getWritingBand(chat._id)">
+              <messages-message-status
+                v-if="isMine(chat)"
+                :status="lastMessageStatus(chat)"
+              ></messages-message-status>
+
+              <span v-if="!unreadMessagesCount(chat._id)" class="readMessages">
+                {{ lastMessageContent(chat) }}</span
+              >
+              <span v-if="unreadMessagesCount(chat._id)" class="unreadMessages">
+                {{ lastMessageContent(chat) }}
+              </span>
             </span>
           </q-item-label>
         </q-item-section>
@@ -66,6 +72,7 @@
 <script setup>
 import { onMounted, ref, watchEffect, computed } from "vue";
 import MessagesMessageStatus from "./MessagesMessageStatus.vue";
+import ContactsUsersContactsListIsWritingStamp from "./ContactsUsersContactsListIsWritingStamp.vue";
 
 import { useChatStore } from "src/stores/chat";
 import { useMessageStore } from "src/stores/messages";

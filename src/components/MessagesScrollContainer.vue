@@ -13,6 +13,13 @@
     "
     class="q-px-md"
   >
+    <span
+      class="text-teal-6 text-weight-bold"
+      v-if="chatStore.getWritingBand(chatId)"
+      style="margin: 10px 0 5px 20px"
+      >Esta escribiendo...</span
+    >
+
     <template
       v-for="(msg, i) in messageStore.getMessages(props.chatId)"
       :key="msg._id"
@@ -64,12 +71,14 @@
 <script setup>
 import { computed, ref, onMounted, watchEffect } from "vue";
 
-import { useMessageStore } from "src/stores/messages";
 import MessagesChatBubble from "./MessagesChatBubble.vue";
-import { isMyMessage } from "src/composables/isMyMessage";
 import MessagesDateStamp from "./MessagesDateStamp.vue";
+
+import { useMessageStore } from "src/stores/messages";
+import { isMyMessage } from "src/composables/isMyMessage";
 import { dateDifferenceFromNow } from "src/composables/dateDifferenceFromNow";
 import { useUnreadMessagesStore } from "src/stores/unreadMessgesStore";
+import { useChatStore } from "src/stores/chat";
 
 const props = defineProps({
   chatId: String,
@@ -80,6 +89,7 @@ let dateBuffer;
 const container = ref(null);
 const messageStore = useMessageStore();
 const unreadMessagesStore = useUnreadMessagesStore();
+const chatStore = useChatStore();
 
 const messagesList = computed(() => {
   return messageStore.getMessages(props.chatId);

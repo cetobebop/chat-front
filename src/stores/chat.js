@@ -9,6 +9,9 @@ export const useChatStore = defineStore("chatStore", () => {
   const myChats = ref([]);
   const chatSelect = ref(null);
   const userStore = useUserStore();
+  const indexedChatwritingBands = ref({});
+  let iAmWritingBand = false;
+  let timeoutId;
 
   function obtainChatInformation(chat) {
     addReceiverPropertyToChat(chat);
@@ -40,11 +43,43 @@ export const useChatStore = defineStore("chatStore", () => {
     };
   }
 
+  function iAmWriting(chatId) {
+    clearTimeout(timeoutId);
+
+    if (!iAmWritingBand) {
+      socket.emit("client:user-is-writing", chatId);
+      iAmWritingBand = true;
+    }
+
+    timeoutId = setTimeout(function () {
+      socket.emit("client:user-stopped-writing", chatId);
+      iAmWritingBand = false;
+    }, 3000);
+  }
+
+  function setWritingBand(chatId) {
+    if (indexedChatwritingBands.value[chatId]) {
+      indexedChatwritingBands.value[chatId] = false;
+
+      return;
+    }
+
+    indexedChatwritingBands.value[chatId] = true;
+    console.log("escribiendo", indexedChatwritingBands.value[chatId]);
+  }
+
+  function getWritingBand(chatId) {
+    return indexedChatwritingBands.value[chatId];
+  }
+
   return {
     myChats,
     chatSelect,
     obtainChatInformation,
     setChatSelect,
     setNewChat,
+    iAmWriting,
+    setWritingBand,
+    getWritingBand,
   };
 });

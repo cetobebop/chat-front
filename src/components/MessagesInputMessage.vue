@@ -12,7 +12,7 @@
         >
         <div
           style="position: absolute; bottom: 11px"
-          @input="textAreaAdaptable()"
+          @input="onInput"
           @paste="handlePaste"
           ref="textarea"
           contenteditable="plaintext-only"
@@ -36,6 +36,7 @@
 import { ref, onMounted } from "vue";
 
 import { useMessageStore } from "src/stores/messages";
+import { useChatStore } from "src/stores/chat";
 
 const emit = defineEmits(["container-input-height"]);
 
@@ -44,6 +45,7 @@ const props = defineProps({
 });
 
 const messageStore = useMessageStore();
+const chatStore = useChatStore();
 
 const container = ref(null);
 const textarea = ref(null);
@@ -59,6 +61,11 @@ function isEmptyTheDiv() {
 onMounted(() => {
   isEmptyTheDiv();
 });
+
+function onInput() {
+  textAreaAdaptable();
+  chatStore.iAmWriting(props.chatId);
+}
 
 function textAreaAdaptable() {
   letterLimit();
