@@ -2,11 +2,12 @@
   <q-form @submit.prevent="onSubmit">
     <div
       id="input-message-container"
-      class="relative-position"
+      class="fixed"
       style="bottom: 0"
       ref="container"
+      v-if="mobileNavigationStore.mobileViewHandler(`chats`)"
     >
-      <div style="width: 95%">
+      <div class="container-textarea">
         <span class="placeholder" style="position: absolute; bottom: 10px"
           >Escribe un mensaje</span
         >
@@ -33,10 +34,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watchEffect } from "vue";
 
 import { useMessageStore } from "src/stores/messages";
 import { useChatStore } from "src/stores/chat";
+import { useMobileNavigationStore } from "src/stores/mobileNavigation";
+
+const mobileNavigationStore = useMobileNavigationStore();
 
 const emit = defineEmits(["container-input-height"]);
 
@@ -49,6 +53,10 @@ const chatStore = useChatStore();
 
 const container = ref(null);
 const textarea = ref(null);
+
+watchEffect(() => {
+  console.log(mobileNavigationStore.mobileViewHandler(`chats`));
+});
 
 function isEmptyTheDiv() {
   if (textarea.value.textContent) {
@@ -118,8 +126,12 @@ function onSubmit() {
 </script>
 
 <style scoped>
+.container-textarea {
+  width: 60%;
+}
+
 .textarea {
-  width: 85%;
+  width: 58%;
   background-color: #2a3942;
   max-height: 150px;
   overflow-wrap: break-word;
@@ -164,12 +176,35 @@ input::placeholder {
 }
 
 @media (max-width: 1000px) {
+  .container-textarea {
+    width: 60%;
+  }
+
+  .textarea {
+    width: 57%;
+  }
+}
+
+@media (max-width: 800px) {
+  .container-textarea {
+    width: 57%;
+  }
+  .textarea {
+    width: 54%;
+  }
+}
+
+@media (max-width: 600px) {
+  .container-textarea {
+    width: 89%;
+  }
+
   .textarea {
     width: 80%;
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 500px) {
   .textarea {
     width: 75%;
   }
@@ -177,19 +212,13 @@ input::placeholder {
 
 @media (max-width: 400px) {
   .textarea {
-    width: 65%;
+    width: 70%;
   }
 }
 
 @media (max-width: 300px) {
   .textarea {
     width: 60%;
-  }
-}
-
-@media (max-width: 250px) {
-  .textarea {
-    width: 55%;
   }
 }
 </style>
