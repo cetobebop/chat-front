@@ -2,7 +2,7 @@
   <div
     ref="container"
     style="
-      height: calc(50vh - 60px - 60px);
+      height: calc(100vh - 60px);
       max-width: 100%;
       min-width: 250px;
       overflow: auto;
@@ -132,7 +132,7 @@ watchEffect(() => {
 
 onMounted(() => {
   watchEffect(() => {
-    container.value.style.height = `calc(100vh - 60px - ${props.containerInputHeight})`;
+    container.value.style.height = `calc(100vh  - ${props.containerInputHeight})`;
   });
 });
 </script>
