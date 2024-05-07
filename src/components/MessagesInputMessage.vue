@@ -5,7 +5,6 @@
       class="fixed"
       style="bottom: 0"
       ref="container"
-      v-if="mobileNavigationStore.mobileViewHandler(`chats`)"
     >
       <div class="container-textarea">
         <span class="placeholder" style="position: absolute; bottom: 10px"
@@ -34,13 +33,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watchEffect } from "vue";
+import { ref, onMounted } from "vue";
 
 import { useMessageStore } from "src/stores/messages";
 import { useChatStore } from "src/stores/chat";
-import { useMobileNavigationStore } from "src/stores/mobileNavigation";
-
-const mobileNavigationStore = useMobileNavigationStore();
 
 const emit = defineEmits(["container-input-height"]);
 
@@ -53,10 +49,6 @@ const chatStore = useChatStore();
 
 const container = ref(null);
 const textarea = ref(null);
-
-watchEffect(() => {
-  console.log(mobileNavigationStore.mobileViewHandler(`chats`));
-});
 
 function isEmptyTheDiv() {
   if (textarea.value.textContent) {

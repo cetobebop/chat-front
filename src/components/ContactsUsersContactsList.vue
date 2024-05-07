@@ -98,6 +98,7 @@ const select = ref("");
 onMounted(() => {
   watchEffect(() => {
     divContainer.value.style.maxWidth = `calc(${props.maxWidth}px - 10px)`;
+    console.log(divContainer.value.style.maxWidth, " PRO 1");
   });
 });
 

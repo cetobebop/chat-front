@@ -24,8 +24,8 @@ export const useMobileNavigationStore = defineStore("mobileNavigation", () => {
 
   function mobileViewHandler(view) {
     if (getWindowsWidth() > 600) return true;
-    else if (getWindowsWidth() < 600 && getSelectView() === view) return true;
-    else if (!getWindowsWidth() < 600 && getSelectView() === view) return false;
+    else if (getWindowsWidth() <= 600 && getSelectView() === view) return true;
+    else if (getWindowsWidth() <= 600 && getSelectView() !== view) return false;
   }
 
   return {
