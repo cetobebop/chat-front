@@ -68,7 +68,7 @@
         :date="msg.createdAt"
       ></messages-date-stamp>
     </template>
-    <q-btn href="#piso">ir a piso</q-btn>
+    <a ref="piso" href="#piso">ir a piso</a>
   </div>
 </template>
 
@@ -90,6 +90,7 @@ const props = defineProps({
 });
 
 let dateBuffer;
+const piso = ref(null);
 const container = ref(null);
 const messageStore = useMessageStore();
 const unreadMessagesStore = useUnreadMessagesStore();
@@ -104,6 +105,10 @@ function previouMsgHasSameIdSender(msgActual, i) {
     messageStore.getMessages(props.chatId)[i + 1]?.sender === msgActual.sender;
 
   return result;
+}
+
+function scrollTo(hash) {
+  container.value.location.hash = "#" + hash;
 }
 
 function isTheSameDate(date, i) {
@@ -132,6 +137,13 @@ watchEffect(() => {
     messageStore.readMessages(props.chatId);
     unreadMessagesStore.removeUnreadChats(props.chatId);
   }
+});
+
+onMounted(() => {
+  watchEffect(() => {
+    console.log(props.chatId);
+    container.value.scrollTop = piso.value.offsetTop;
+  });
 });
 
 onMounted(() => {
