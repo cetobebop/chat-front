@@ -142,7 +142,7 @@ watchEffect(() => {
 onMounted(() => {
   watchEffect(() => {
     console.log(props.chatId);
-    container.value.scrollTop = piso.value.offsetTop;
+    container.value.scrollTop = container.value.scrollHeight;
   });
 });
 
