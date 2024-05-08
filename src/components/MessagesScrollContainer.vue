@@ -10,6 +10,7 @@
       flex-direction: column-reverse;
       scrollbar-gutter: stable both-edges;
       padding: 10px;
+      border: red 2px solid;
     "
     class="q-px-md"
   >
