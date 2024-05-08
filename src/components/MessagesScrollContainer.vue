@@ -14,7 +14,7 @@
     "
     class="q-px-md"
   >
-    <span id="piso">piso</span>
+    <span id="piso"></span>
 
     <span
       class="text-teal-6 text-weight-bold"
@@ -68,7 +68,14 @@
         :date="msg.createdAt"
       ></messages-date-stamp>
     </template>
-    <a ref="piso" href="#piso">ir a piso</a>
+    <q-btn
+      href="#piso"
+      round
+      color="grey-9"
+      class="fixed"
+      style="right: 10px"
+      icon="expand_more"
+    />
   </div>
 </template>
 
@@ -107,9 +114,7 @@ function previouMsgHasSameIdSender(msgActual, i) {
   return result;
 }
 
-function scrollTo(hash) {
-  container.value.location.hash = "#" + hash;
-}
+function onClick() {}
 
 function isTheSameDate(date, i) {
   const proxDate = messageStore.getMessages(props.chatId)[i + 1]?.createdAt;
@@ -142,7 +147,7 @@ watchEffect(() => {
 onMounted(() => {
   watchEffect(() => {
     console.log(props.chatId);
-    window.scrollTop = window.scrollHeight;
+    window.scrollTo(0, window.scrollHeight);
   });
 });
 
