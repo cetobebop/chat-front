@@ -14,6 +14,8 @@
     "
     class="q-px-md"
   >
+    <span id="piso">piso</span>
+
     <span
       class="text-teal-6 text-weight-bold"
       v-if="chatStore.getWritingBand(chatId)"
@@ -66,6 +68,7 @@
         :date="msg.createdAt"
       ></messages-date-stamp>
     </template>
+    <q-btn href="#piso">ir a piso</q-btn>
   </div>
 </template>
 
