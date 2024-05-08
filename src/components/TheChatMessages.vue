@@ -4,7 +4,6 @@
       :arrowBack="true"
       :avatar="urlAvatar"
       :title="username"
-      style="position: fixed; top: 0; z-index: 100; width: 100%"
     ></base-toolbar>
 
     <messages-scroll-container
