@@ -69,11 +69,19 @@
       ></messages-date-stamp>
     </template>
     <q-btn
-      href="#piso"
+      @click="onClick1"
       round
       color="grey-9"
       class="fixed"
       style="right: 10px"
+      icon="expand_more"
+    />
+    <q-btn
+      @click="onClick2"
+      round
+      color="red-9"
+      class="fixed"
+      style="right: 60px"
       icon="expand_more"
     />
   </div>
@@ -97,7 +105,6 @@ const props = defineProps({
 });
 
 let dateBuffer;
-const piso = ref(null);
 const container = ref(null);
 const messageStore = useMessageStore();
 const unreadMessagesStore = useUnreadMessagesStore();
@@ -114,7 +121,13 @@ function previouMsgHasSameIdSender(msgActual, i) {
   return result;
 }
 
-function onClick() {}
+function onClick1() {
+  window.scrollTo(0, window.scrollHeight);
+}
+
+function onClick2() {
+  window.scrollBy(0, window.innerHeight);
+}
 
 function isTheSameDate(date, i) {
   const proxDate = messageStore.getMessages(props.chatId)[i + 1]?.createdAt;
