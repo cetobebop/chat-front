@@ -2,7 +2,7 @@
   <div id="chat-container-left">
     <base-toolbar
       :avatar="userStore?.myUser?.userAvatar"
-      :title="userStore?.myUser?.username"
+      title="App de mensajeria"
     ></base-toolbar>
     <contacts-users-scroll-container
       :maxWidth="maxWidth"

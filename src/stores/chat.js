@@ -54,7 +54,7 @@ export const useChatStore = defineStore("chatStore", () => {
     timeoutId = setTimeout(function () {
       socket.emit("client:user-stopped-writing", chatId);
       iAmWritingBand = false;
-    }, 3000);
+    }, 1000);
   }
 
   function setWritingBand(chatId) {
