@@ -11,12 +11,9 @@
       flex-direction: column-reverse;
       scrollbar-gutter: stable both-edges;
       padding: 10px;
-      border: red 2px solid;
     "
     class="q-px-md"
   >
-    <span id="piso"></span>
-
     <span
       class="text-teal-6 text-weight-bold"
       v-if="chatStore.getWritingBand(chatId)"
@@ -69,31 +66,6 @@
         :date="msg.createdAt"
       ></messages-date-stamp>
     </template>
-    <q-btn
-      @click="onClick1"
-      round
-      color="grey-9"
-      class="fixed"
-      style="right: 10px; top: 120px"
-      icon="expand_more"
-    />
-    <q-btn
-      @click="onClick2"
-      round
-      color="red-9"
-      class="fixed"
-      style="right: 60px; top: 120px"
-      icon="expand_more"
-    />
-
-    <q-btn
-      @click="onClick3"
-      round
-      color="green-9"
-      class="fixed"
-      style="right: 120px; top: 120px"
-      icon="expand_more"
-    />
   </div>
 </template>
 
@@ -130,18 +102,6 @@ function previouMsgHasSameIdSender(msgActual, i) {
     messageStore.getMessages(props.chatId)[i + 1]?.sender === msgActual.sender;
 
   return result;
-}
-
-function onClick1() {
-  window.scrollTo(0, window.scrollHeight);
-}
-
-function onClick2() {
-  window.scrollBy(0, window.innerHeight);
-}
-
-function onClick3() {
-  container.value.scrollTop = container.value.scrollHeight;
 }
 
 function isTheSameDate(date, i) {
