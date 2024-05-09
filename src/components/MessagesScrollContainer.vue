@@ -108,6 +108,7 @@ import { isMyMessage } from "src/composables/isMyMessage";
 import { dateDifferenceFromNow } from "src/composables/dateDifferenceFromNow";
 import { useUnreadMessagesStore } from "src/stores/unreadMessgesStore";
 import { useChatStore } from "src/stores/chat";
+import { scrollToTheBottom } from "src/composables/scrollToTheBottom";
 
 const props = defineProps({
   chatId: String,
@@ -173,13 +174,10 @@ watchEffect(() => {
 
 onMounted(() => {
   watchEffect(() => {
-    console.log(props.chatId);
-    window.scrollBy(0, window.innerHeight);
-    container.value.scrollTop = container.value.scrollHeight;
+    props.chatId;
+    scrollToTheBottom(container.value);
   });
-});
 
-onMounted(() => {
   watchEffect(() => {
     container.value.style.height = `calc(100vh - 60px - ${props.containerInputHeight})`;
   });

@@ -37,6 +37,7 @@ import { ref, onMounted } from "vue";
 
 import { useMessageStore } from "src/stores/messages";
 import { useChatStore } from "src/stores/chat";
+import { scrollToTheBottom } from "src/composables/scrollToTheBottom";
 
 const emit = defineEmits(["container-input-height"]);
 
@@ -114,6 +115,7 @@ function onSubmit() {
   textarea.value.textContent = "";
   isEmptyTheDiv();
   textAreaAdaptable();
+  scrollToTheBottom();
 }
 </script>
 
