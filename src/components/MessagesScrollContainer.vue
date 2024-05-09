@@ -1,6 +1,7 @@
 <template>
   <div
     ref="container"
+    id="div"
     style="
       height: calc(100vh - 60px - 60px);
       max-width: 100%;
@@ -84,6 +85,15 @@
       style="right: 60px"
       icon="expand_more"
     />
+
+    <q-btn
+      @click="onClick3"
+      round
+      color="green-9"
+      class="fixed"
+      style="right: 120px"
+      icon="expand_more"
+    />
   </div>
 </template>
 
@@ -127,6 +137,11 @@ function onClick1() {
 
 function onClick2() {
   window.scrollBy(0, window.innerHeight);
+}
+
+function onClick3() {
+  var div = document.getElementById("div");
+  div.scrollTop = div.scrollHeight;
 }
 
 function isTheSameDate(date, i) {
