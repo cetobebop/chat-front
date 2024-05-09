@@ -140,8 +140,7 @@ function onClick2() {
 }
 
 function onClick3() {
-  var div = document.getElementById("div");
-  div.scrollTop = div.scrollHeight;
+  container.value.scrollTop = container.value.scrollHeight;
 }
 
 function isTheSameDate(date, i) {
@@ -175,7 +174,8 @@ watchEffect(() => {
 onMounted(() => {
   watchEffect(() => {
     console.log(props.chatId);
-    window.scrollTo(0, window.scrollHeight);
+    window.scrollBy(0, window.innerHeight);
+    container.value.scrollTop = container.value.scrollHeight;
   });
 });
 
