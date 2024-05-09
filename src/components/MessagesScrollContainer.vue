@@ -74,7 +74,7 @@
       round
       color="grey-9"
       class="fixed"
-      style="right: 10px"
+      style="right: 10px; top: 120px"
       icon="expand_more"
     />
     <q-btn
@@ -82,7 +82,7 @@
       round
       color="red-9"
       class="fixed"
-      style="right: 60px"
+      style="right: 60px; top: 120px"
       icon="expand_more"
     />
 
@@ -91,7 +91,7 @@
       round
       color="green-9"
       class="fixed"
-      style="right: 120px"
+      style="right: 120px; top: 120px"
       icon="expand_more"
     />
   </div>
