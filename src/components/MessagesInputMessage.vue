@@ -116,6 +116,7 @@ function onSubmit() {
   isEmptyTheDiv();
   textAreaAdaptable();
   scrollToTheBottom();
+  textarea.value.focus();
 }
 </script>
 

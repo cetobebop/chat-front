@@ -11,7 +11,6 @@ export const useUserStore = defineStore("user", () => {
   }
 
   function obtainUsersOnline(data) {
-    console.log(data, " usuarios ");
     otherConnectedUsers.value = indexUsers(data);
     findMe();
   }
@@ -28,7 +27,7 @@ export const useUserStore = defineStore("user", () => {
 
   function findMe() {
     if (otherConnectedUsers.value[myUser.value?._id]) {
-      otherConnectedUsers.value[myUser.value._id].username = "Yo";
+      otherConnectedUsers.value[myUser.value._id].username += " (Tú)";
       return;
     }
   }
