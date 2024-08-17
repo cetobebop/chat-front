@@ -1,35 +1,27 @@
 <template>
-  <q-form @submit.prevent="onSubmit">
-    <div
-      id="input-message-container"
-      class="fixed"
-      style="bottom: 0"
-      ref="container"
+  <div class="container-textarea">
+    <span class="placeholder" style="position: absolute; bottom: 10px"
+      >Escribe un mensaje</span
     >
-      <div class="container-textarea">
-        <span class="placeholder" style="position: absolute; bottom: 10px"
-          >Escribe un mensaje</span
-        >
-        <div
-          style="position: absolute; bottom: 11px"
-          @input="onInput"
-          @paste="handlePaste"
-          ref="textarea"
-          contenteditable="plaintext-only"
-          class="textarea"
-        ></div>
-      </div>
+    <div
+      style="position: absolute; bottom: 11px"
+      @input="onInput"
+      @paste="handlePaste"
+      ref="textarea"
+      contenteditable="true"
+      class="textarea"
+    ></div>
+  </div>
 
-      <q-btn
-        type="submit"
-        style="color: var(--primary-color)"
-        class="q-ml-sm"
-        unelevated
-        :ripple="false"
-        icon="send"
-      ></q-btn>
-    </div>
-  </q-form>
+  <q-btn
+    @click="onSubmit"
+    type="submit"
+    style="color: var(--primary-color)"
+    class="q-ml-sm absolute-right"
+    unelevated
+    :ripple="false"
+    icon="send"
+  ></q-btn>
 </template>
 
 <script setup>
@@ -39,7 +31,7 @@ import { useMessageStore } from "src/stores/messages";
 import { useChatStore } from "src/stores/chat";
 import { scrollToTheBottom } from "src/composables/scrollToTheBottom";
 
-const emit = defineEmits(["container-input-height"]);
+const emit = defineEmits(["textarea-input-height"]);
 
 const props = defineProps({
   chatId: String,
@@ -48,7 +40,6 @@ const props = defineProps({
 const messageStore = useMessageStore();
 const chatStore = useChatStore();
 
-const container = ref(null);
 const textarea = ref(null);
 
 function isEmptyTheDiv() {
@@ -73,10 +64,10 @@ function textAreaAdaptable() {
   isEmptyTheDiv();
   textarea.value.style.height = "auto";
   textarea.value.style.height = textarea.value.scrollHeight + "px";
-  container.value.style.height = "auto";
-  container.value.style.height =
-    parseInt(textarea.value.scrollHeight + 20) + "px";
-  emit("container-input-height", container.value.clientHeight);
+  emit(
+    "textarea-input-height",
+    parseInt(textarea.value.scrollHeight + 20) + "px"
+  );
 }
 
 function handlePaste(event) {
@@ -122,11 +113,13 @@ function onSubmit() {
 
 <style scoped>
 .container-textarea {
-  width: 60%;
+  width: 70%;
+  height: 100%;
 }
 
 .textarea {
-  width: 58%;
+  height: auto;
+  width: 80%;
   background-color: #2a3942;
   max-height: 150px;
   overflow-wrap: break-word;
@@ -149,18 +142,6 @@ function onSubmit() {
   pointer-events: none;
 }
 
-#input-message-container {
-  width: 100%;
-  min-width: 250px;
-  background: #202c33;
-  height: 60px;
-  min-height: 60px;
-  max-height: 170px;
-  display: flex;
-  align-items: center;
-  padding: 0 25px 0 25px;
-}
-
 input::placeholder {
   color: var(--primary-color);
   opacity: 0.5;
@@ -170,50 +151,33 @@ input::placeholder {
   background: #2a3942;
 }
 
-@media (max-width: 1000px) {
-  .container-textarea {
-    width: 60%;
-  }
-
+@media (min-width: 1200px) {
   .textarea {
-    width: 57%;
+    width: 85%;
   }
 }
 
-@media (max-width: 800px) {
-  .container-textarea {
-    width: 57%;
-  }
-  .textarea {
-    width: 54%;
-  }
-}
-
-@media (max-width: 600px) {
-  .container-textarea {
-    width: 89%;
-  }
-
-  .textarea {
-    width: 80%;
-  }
-}
-
-@media (max-width: 500px) {
+@media (max-width: 900px) {
   .textarea {
     width: 75%;
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 500px) {
   .textarea {
     width: 70%;
   }
 }
 
-@media (max-width: 300px) {
+@media (max-width: 400px) {
   .textarea {
     width: 60%;
+  }
+}
+
+@media (max-width: 300px) {
+  .textarea {
+    width: 54%;
   }
 }
 </style>

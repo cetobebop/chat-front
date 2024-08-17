@@ -2,6 +2,7 @@
   <q-scroll-area
     style="height: calc(100% - 60px - 60px); max-width: 100%"
     class="q-pl-sm"
+    :content-style="contentStyle"
   >
     <contacts-users-online-list
       v-if="tabStore.tab === `users`"
@@ -25,6 +26,10 @@ import { useTabStore } from "src/stores/tab";
 defineProps({
   maxWidth: Number,
 });
+
+const contentStyle = {
+  backgroundColor: "#071015",
+};
 
 const tabStore = useTabStore();
 const userStore = useUserStore();

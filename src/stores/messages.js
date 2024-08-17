@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { socket } from "src/socket";
 import { useUserStore } from "./user";
 import { useChatStore } from "./chat";
+import { useBotsStore } from "./bots";
 import { reverseRoles } from "src/composables/reverseRoles";
 import moment from "moment";
 
@@ -11,8 +12,9 @@ export const useMessageStore = defineStore("messageStore", () => {
   const allIndexedChatMessages = ref({});
   const lastMessagesIndexed = ref({});
 
-  const useStore = useUserStore();
+  const userStore = useUserStore();
   const chatStore = useChatStore();
+  const botStore = useBotsStore();
 
   function setReceiver(id) {
     receiver.value = id;
@@ -59,6 +61,11 @@ export const useMessageStore = defineStore("messageStore", () => {
 
   function changeMessageStatus(idChat) {
     if (allIndexedChatMessages.value[idChat]) {
+      if (allIndexedChatMessages.value[idChat][1])
+        allIndexedChatMessages.value[idChat][1].status =
+          allIndexedChatMessages.value[idChat][1].status === undefined
+            ? "sent"
+            : allIndexedChatMessages.value[idChat][1].status;
       allIndexedChatMessages.value[idChat][0].status = "sent";
     }
   }
@@ -76,7 +83,7 @@ export const useMessageStore = defineStore("messageStore", () => {
   function sentMessage(msg, chatId) {
     const data = {
       content: msg,
-      sender: useStore.myUser._id,
+      sender: userStore.myUser._id,
       receiver: receiver.value,
       status: undefined,
       createdAt: moment().format(),
@@ -84,11 +91,23 @@ export const useMessageStore = defineStore("messageStore", () => {
 
     if (chatId) setAllIndexedChatMessages(chatId, data);
 
+    if (botStore.verifyUserIsABot(receiver.value)) {
+      socket.emit(
+        "client:message-to-bot",
+        {
+          receiver: receiver.value,
+          sender: userStore.myUser.nanoId,
+          msg,
+        },
+        (res) => {}
+      );
+    }
+
     socket.emit(
       "client:sent-message",
       {
         receiver: receiver.value,
-        sender: useStore.myUser.nanoId,
+        sender: userStore.myUser.nanoId,
         msg,
       },
       (res) => {
@@ -105,6 +124,19 @@ export const useMessageStore = defineStore("messageStore", () => {
     );
   }
 
+  function addImageToIndexedMessages(msg, chatId) {
+    const data = {
+      content: msg,
+      sender: userStore.myUser._id,
+      receiver: receiver.value,
+      status: undefined,
+      createdAt: moment().format(),
+      isAMultimediaFile: true,
+    };
+
+    if (chatId) setAllIndexedChatMessages(chatId, data);
+  }
+
   return {
     receiver,
     allIndexedChatMessages,
@@ -118,5 +150,7 @@ export const useMessageStore = defineStore("messageStore", () => {
     receivedMessages,
     readMessages,
     modifyStatus,
+    changeMessageStatus,
+    addImageToIndexedMessages,
   };
 });

@@ -11,18 +11,19 @@
       :chatId="chatId"
     ></messages-scroll-container>
 
-    <messages-input-message
+    <messages-input-container
       @container-input-height="setNewHeight"
       :chatId="chatId"
-    ></messages-input-message>
+    ></messages-input-container>
   </div>
 </template>
 
 <script setup>
 import { computed, ref } from "vue";
 import BaseToolbar from "./BaseToolbar.vue";
-import MessagesInputMessage from "./MessagesInputMessage.vue";
 import MessagesScrollContainer from "./MessagesScrollContainer.vue";
+
+import MessagesInputContainer from "./MessagesInputContainer.vue";
 
 import { useChatStore } from "src/stores/chat";
 

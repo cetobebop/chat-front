@@ -1,10 +1,28 @@
 // app global css in SCSS form
 
+// color palette
+// #071015
+// #0B161C
+// #075E54
+// #202C33
+// #051F1C
+
+* {
+  font-size: 13px;
+}
+
+@media (max-width: 800px) {
+  * {
+    font-size: 10px;
+  }
+}
+
 :root {
   --panel-header-background: #202c33;
   --border-contact: rgba(134, 150, 160, 0.15);
   --primary-color: #d1d7db;
   --my-message-color: #075e54;
+  --my-first-btn-color: #075e54;
   --other-message-color: #313d44;
   --time-stamp: #182229;
 }

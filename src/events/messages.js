@@ -20,6 +20,7 @@ export function messagesEvents(socket) {
   socket.on("server:new-room-new-message", (chatId, msg) => {
     if (!messagesStore) messagesStore = useMessageStore();
     if (!unreadMessagesStore) unreadMessagesStore = useUnreadMessagesStore();
+
     messagesStore.receivedMessages(chatId);
     unreadMessagesStore.setIndexedUnreadMessage(chatId);
     messagesStore.setAllIndexedChatMessages(chatId, [msg]);
@@ -27,6 +28,7 @@ export function messagesEvents(socket) {
 
   socket.on("server:get-chat-messages", (chatId, msg) => {
     if (!messagesStore) messagesStore = useMessageStore();
+
     messagesStore.readMessages(chatId);
     messagesStore.setAllIndexedChatMessages(chatId, msg);
   });

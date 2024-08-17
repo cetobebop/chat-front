@@ -18,13 +18,17 @@ import BaseToolbar from "./BaseToolbar.vue";
 import ContactsTab from "./ContactsTab.vue";
 import ContactsUsersScrollContainer from "./ContactsUsersScrollContainer.vue";
 
+import { useElmentsSizeStore } from "src/stores/elementsSize";
 import { useUserStore } from "src/stores/user";
 
+  
+const elmentsSizeStore = useElmentsSizeStore()
 const userStore = useUserStore();
 
 const maxWidth = ref(null);
 
 function onResize(size) {
+  elmentsSizeStore.theChatContactsSize = size
   maxWidth.value = size.width;
 }
 </script>

@@ -3,6 +3,7 @@ import { io } from "socket.io-client";
 import { userEvents } from "./events/user";
 import { roomsEvents } from "./events/chat";
 import { messagesEvents } from "./events/messages";
+import { imageEvents } from "./events/image";
 
 export const state = ref(null);
 
@@ -26,6 +27,7 @@ socket.on("disconnect", () => {
 userEvents(socket);
 roomsEvents(socket);
 messagesEvents(socket);
+imageEvents(socket);
 
 socket.on("connect_error", (err) => {
   console.log(err.message); // prints the message associated with the error

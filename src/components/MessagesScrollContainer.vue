@@ -14,12 +14,18 @@
     "
     class="q-px-md"
   >
-    <span
-      class="text-teal-6 text-weight-bold"
+    <q-chat-message
       v-if="chatStore.getWritingBand(chatId)"
+      bg-color="blue-grey-9"
       style="margin: 10px 0 5px 20px"
-      >Esta escribiendo...</span
     >
+      <q-spinner-dots size="2rem" />
+    </q-chat-message>
+
+    <messages-notification-without-chat
+      v-if="!messageStore.getLastMessage(props.chatId)"
+    >
+    </messages-notification-without-chat>
 
     <template
       v-for="(msg, i) in messageStore.getMessages(props.chatId)"
@@ -29,7 +35,11 @@
         :content="msg.content"
         :sent="true"
         :first="true"
-        v-if="isMyMessage(msg) && !previouMsgHasSameIdSender(msg, i)"
+        v-if="
+          isMyMessage(msg) &&
+          !previouMsgHasSameIdSender(msg, i) &&
+          !msg.isAMultimediaFile
+        "
         :status="msg.status"
         :date="msg.createdAt"
       ></messages-chat-bubble>
@@ -38,7 +48,11 @@
         :content="msg.content"
         :sent="true"
         :first="false"
-        v-if="isMyMessage(msg) && previouMsgHasSameIdSender(msg, i)"
+        v-if="
+          isMyMessage(msg) &&
+          previouMsgHasSameIdSender(msg, i) &&
+          !msg.isAMultimediaFile
+        "
         :status="msg.status"
         :date="msg.createdAt"
       ></messages-chat-bubble>
@@ -47,7 +61,11 @@
         :content="msg.content"
         :sent="false"
         :first="true"
-        v-if="!isMyMessage(msg) && !previouMsgHasSameIdSender(msg, i)"
+        v-if="
+          !isMyMessage(msg) &&
+          !previouMsgHasSameIdSender(msg, i) &&
+          !msg.isAMultimediaFile
+        "
         :date="msg.createdAt"
       ></messages-chat-bubble>
 
@@ -55,9 +73,67 @@
         :content="msg.content"
         :sent="false"
         :first="false"
-        v-if="!isMyMessage(msg) && previouMsgHasSameIdSender(msg, i)"
+        v-if="
+          !isMyMessage(msg) &&
+          previouMsgHasSameIdSender(msg, i) &&
+          !msg.isAMultimediaFile
+        "
         :date="msg.createdAt"
       ></messages-chat-bubble>
+
+      <messages-chat-bubble-image
+        :url-image="msg.content"
+        :sent="true"
+        :first="true"
+        v-if="
+          isMyMessage(msg) &&
+          !previouMsgHasSameIdSender(msg, i) &&
+          msg.isAMultimediaFile
+        "
+        :date="msg.createdAt"
+        :status="msg.status"
+      >
+      </messages-chat-bubble-image>
+
+      <messages-chat-bubble-image
+        :url-image="msg.content"
+        :sent="true"
+        :first="false"
+        v-if="
+          isMyMessage(msg) &&
+          previouMsgHasSameIdSender(msg, i) &&
+          msg.isAMultimediaFile
+        "
+        :date="msg.createdAt"
+        :status="msg.status"
+      >
+      </messages-chat-bubble-image>
+
+      <messages-chat-bubble-image
+        :url-image="msg.content"
+        :sent="false"
+        :first="true"
+        v-if="
+          !isMyMessage(msg) &&
+          !previouMsgHasSameIdSender(msg, i) &&
+          msg.isAMultimediaFile
+        "
+        :date="msg.createdAt"
+      >
+      </messages-chat-bubble-image>
+
+      <messages-chat-bubble-image
+        :url-image="msg.content"
+        :sent="false"
+        :first="false"
+        v-if="
+          !isMyMessage(msg) &&
+          previouMsgHasSameIdSender(msg, i) &&
+          msg.isAMultimediaFile
+        "
+        :date="msg.createdAt"
+      >
+      </messages-chat-bubble-image>
 
       <messages-date-stamp
         v-if="isTheSameDate(msg.createdAt, i)"
@@ -73,7 +149,9 @@
 import { computed, ref, onMounted, watchEffect } from "vue";
 
 import MessagesChatBubble from "./MessagesChatBubble.vue";
+import MessagesChatBubbleImage from "./MessagesChatBubbleImage.vue";
 import MessagesDateStamp from "./MessagesDateStamp.vue";
+import MessagesNotificationWithoutChat from "./MessagesNotificationWithoutChat.vue";
 
 import { useMessageStore } from "src/stores/messages";
 import { isMyMessage } from "src/composables/isMyMessage";
@@ -127,6 +205,7 @@ function isTheSameDate(date, i) {
 watchEffect(() => {
   if (messagesList.value) {
     messagesList.value.length;
+
     messageStore.readMessages(props.chatId);
     unreadMessagesStore.removeUnreadChats(props.chatId);
   }
@@ -145,6 +224,11 @@ onMounted(() => {
 </script>
 
 <style scoped>
+#div {
+  background: #070d12;
+  object-fit: cover;
+}
+
 .q-message-text--sent {
   color: #005c4b !important;
   background: #005c4b !important;

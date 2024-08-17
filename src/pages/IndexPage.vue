@@ -4,6 +4,12 @@
       v-if="isUserView"
       class="col-xs-12 col-sm-4"
     ></the-chat-contacts>
+
+    <messages-chat-unselected-chat
+      class="col-xs-12 col-sm-8"
+      v-if="!chatStore.chatSelect"
+    ></messages-chat-unselected-chat>
+
     <the-chat-messages
       v-if="
         mobileNavigationStore.mobileViewHandler(`chats`) && chatStore.chatSelect
@@ -19,6 +25,7 @@ import { ref, watchEffect } from "vue";
 
 import TheChatContacts from "src/components/TheChatContacts.vue";
 import TheChatMessages from "src/components/TheChatMessages.vue";
+import MessagesChatUnselectedChat from "src/components/MessagesChatUnselectedChat.vue";
 
 import { useChatStore } from "src/stores/chat";
 import { useMobileNavigationStore } from "src/stores/mobileNavigation";

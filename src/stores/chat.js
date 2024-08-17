@@ -37,6 +37,8 @@ export const useChatStore = defineStore("chatStore", () => {
   }
 
   function setChatSelect(user, chat = undefined) {
+    console.log("chat seleccionado: ", chat?._id);
+
     chatSelect.value = {
       user,
       chat,
@@ -65,7 +67,6 @@ export const useChatStore = defineStore("chatStore", () => {
     }
 
     indexedChatwritingBands.value[chatId] = true;
-    console.log("escribiendo", indexedChatwritingBands.value[chatId]);
   }
 
   function getWritingBand(chatId) {
