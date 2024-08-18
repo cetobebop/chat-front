@@ -1,8 +1,8 @@
 <template>
   <q-scroll-area
     style="height: calc(100% - 60px - 60px); max-width: 100%"
-    class="q-pl-sm"
     :content-style="contentStyle"
+    :content-active-style="contentActiveStyle"
   >
     <contacts-users-online-list
       v-if="tabStore.tab === `users`"
@@ -28,6 +28,10 @@ defineProps({
 });
 
 const contentStyle = {
+  backgroundColor: "#071015",
+};
+
+const contentActiveStyle = {
   backgroundColor: "#071015",
 };
 

@@ -7,7 +7,10 @@
 
     <messages-chat-unselected-chat
       class="col-xs-12 col-sm-8"
-      v-if="!chatStore.chatSelect"
+      v-if="
+        !chatStore.chatSelect &&
+        mobileNavigationStore.mobileViewHandler(`chats`)
+      "
     ></messages-chat-unselected-chat>
 
     <the-chat-messages
