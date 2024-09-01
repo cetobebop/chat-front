@@ -11,6 +11,10 @@
   font-size: 13px;
 }
 
+body {
+  background: var(--body-background);
+}
+
 @media (max-width: 800px) {
   * {
     font-size: 10px;
@@ -25,6 +29,8 @@
   --my-first-btn-color: #075e54;
   --other-message-color: #313d44;
   --time-stamp: #182229;
+  --container-background: #070d12;
+  --body-background: #070d12;
 }
 
 ::-webkit-scrollbar {

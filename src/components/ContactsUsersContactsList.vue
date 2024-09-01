@@ -71,6 +71,7 @@
 
 <script setup>
 import { onMounted, ref, watchEffect, computed } from "vue";
+import { useRouter } from "vue-router";
 import MessagesMessageStatus from "./MessagesMessageStatus.vue";
 import ContactsUsersContactsListIsWritingStamp from "./ContactsUsersContactsListIsWritingStamp.vue";
 
@@ -95,6 +96,8 @@ const unreadMessagesStore = useUnreadMessagesStore();
 const divContainer = ref(null);
 const select = ref("");
 
+const router = useRouter();
+
 onMounted(() => {
   watchEffect(() => {
     divContainer.value.style.maxWidth = `calc(${props.maxWidth}px - 10px)`;
@@ -102,6 +105,7 @@ onMounted(() => {
 });
 
 function selectAChat(chat) {
+  if (window.innerWidth <= 600) router.push("/chat");
   mobileNavigationStore.changeSelectView("chats");
   messagesStore.setReceiver(chat.receiver._id);
   chatStore.setChatSelect(chat.receiver, chat);

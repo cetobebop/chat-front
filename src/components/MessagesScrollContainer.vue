@@ -225,7 +225,7 @@ onMounted(() => {
 
 <style scoped>
 #div {
-  background: #070d12;
+  background: var(--container-background);
   object-fit: cover;
 }
 

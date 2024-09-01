@@ -1,10 +1,10 @@
 <template>
   <div class="container-textarea">
-    <span class="placeholder" style="position: absolute; bottom: 10px"
+    <span class="placeholder" style="position: absolute; bottom: 13px"
       >Escribe un mensaje</span
     >
     <div
-      style="position: absolute; bottom: 11px"
+      style="position: absolute; bottom: 14px"
       @input="onInput"
       @paste="handlePaste"
       ref="textarea"
@@ -16,8 +16,8 @@
   <q-btn
     @click="onSubmit"
     type="submit"
-    style="color: var(--primary-color)"
-    class="q-ml-sm absolute-right"
+    style="color: var(--primary-color); right: 10px"
+    class="absolute"
     unelevated
     :ripple="false"
     icon="send"
@@ -113,11 +113,11 @@ function onSubmit() {
 
 <style scoped>
 .container-textarea {
-  width: 70%;
   height: 100%;
 }
 
 .textarea {
+  margin-left: 5px;
   height: auto;
   width: 80%;
   background-color: #2a3942;
@@ -136,6 +136,7 @@ function onSubmit() {
 }
 
 .placeholder {
+  margin-left: 5px;
   opacity: 0.7;
   z-index: 10;
   padding: 9px 15px;
@@ -153,7 +154,7 @@ input::placeholder {
 
 @media (min-width: 1200px) {
   .textarea {
-    width: 85%;
+    width: 83%;
   }
 }
 

@@ -82,7 +82,8 @@ const messageDate = (date) => {
 
 onMounted(() => {
   image.value.onload = () => {
-    container_image.value.style.height = image.value.clientHeight + "px";
+    if (container_image.value?.style)
+      container_image.value.style.height = image.value.clientHeight + "px";
   };
 });
 </script>

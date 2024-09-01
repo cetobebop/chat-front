@@ -13,6 +13,7 @@ export function roomsEvents(socket) {
     if (!unreadMessagesStore) unreadMessagesStore = useUnreadMessagesStore();
 
     messageStore.receivedMessages(chats);
+    chatStore.setServerSendChatsToClientStatus(true);
     messageStore.lastMessagesIndexed = indexMessageChat;
     chatStore.obtainChatInformation(chats);
     unreadMessagesStore.initIndexedUnreadMessages(unreadMessages);

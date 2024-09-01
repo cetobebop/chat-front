@@ -5,6 +5,10 @@ import { roomsEvents } from "./events/chat";
 import { messagesEvents } from "./events/messages";
 import { imageEvents } from "./events/image";
 
+import { useServerConnectionStore } from "./stores/serverConnection";
+
+const serverConnectionStore = useServerConnectionStore()
+
 export const state = ref(null);
 
 const URL = process.env.URL_SERVER;
@@ -17,6 +21,7 @@ export const socket = io(URL, {
 });
 
 socket.on("connect", () => {
+  serverConnectionStore.setConnectionStatus(true)
   state.value = true;
 });
 
@@ -30,5 +35,7 @@ messagesEvents(socket);
 imageEvents(socket);
 
 socket.on("connect_error", (err) => {
-  console.log(err.message); // prints the message associated with the error
+  console.log("sin coneccion papi")
+  serverConnectionStore.setConnectionStatus(false)
+  // console.log(err.message); // prints the message associated with the error
 });

@@ -33,6 +33,7 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 import { useMessageStore } from "src/stores/messages";
 import { useChatStore } from "src/stores/chat";
@@ -51,8 +52,12 @@ const unreadMessagesStore = useUnreadMessagesStore();
 
 const select = ref("");
 
+const router = useRouter();
+
 function selectAChat(user) {
   select.value = user._id;
+
+  if (window.innerWidth <= 600) router.push("/chat");
 
   mobileNavigationStore.changeSelectView("chats");
   messagesStore.setReceiver(user._id);

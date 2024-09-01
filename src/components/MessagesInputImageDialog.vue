@@ -200,8 +200,13 @@ img {
 }
 
 @media (max-width: 700px) {
+  .modal {
+    padding-top: 60px;
+  }
+
   .modal-content {
     width: 90%;
+    height: calc(600px - 60px);
   }
 }
 

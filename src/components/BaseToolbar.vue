@@ -34,7 +34,11 @@
 </template>
 
 <script setup>
+import { useRouter } from "vue-router";
+
 import { useMobileNavigationStore } from "src/stores/mobileNavigation";
+
+const router = useRouter();
 
 defineProps({
   title: String,
@@ -45,6 +49,7 @@ defineProps({
 const movileNavigationStore = useMobileNavigationStore();
 
 function onClick() {
+  if (window.innerWidth <= 600) router.push("/");
   movileNavigationStore.changeSelectView("users");
 }
 </script>
