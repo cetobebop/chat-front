@@ -19,6 +19,7 @@
           >
         </label>
         <q-btn
+          :loading="loading"
           style="margin-top: 8px"
           type="submit"
           color="teal-9"
@@ -45,6 +46,7 @@ const form = ref(null);
 const file = ref(null);
 const imageUrl = ref(null);
 const imageUrlToSave = ref(null);
+const loading = ref(false);
 
 const messageStore = useMessageStore();
 const userStore = useUserStore();
@@ -61,6 +63,7 @@ async function onSubmit() {
   formData.append("receiver", receiverId);
 
   try {
+    loading.value = true;
     const res = await api("/images/image", {
       method: "post",
       data: formData,
@@ -75,6 +78,7 @@ async function onSubmit() {
   } catch (e) {
     console.log(e);
   } finally {
+    loading.value = false;
     myModal.value.style.display = "none";
     imageUrl.value = null;
   }

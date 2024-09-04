@@ -52,6 +52,12 @@ function isEmptyTheDiv() {
 
 onMounted(() => {
   isEmptyTheDiv();
+
+  textarea.value.addEventListener("keyup", function (event) {
+    if (event.code === "Enter") {
+      onSubmit();
+    }
+  });
 });
 
 function onInput() {
