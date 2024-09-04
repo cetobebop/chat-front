@@ -1,7 +1,7 @@
 <template>
   <base-loading-modal
     :showing="!serverConnectionStore.getConnectionBooleanStatus"
-    src="../../public/gif/tortuga bailando.gif"
+    src="/public/gif/tortuga bailando.gif"
     msg="El servidor gratuito se esta despertando, tardara de 3 a 4 minutos, gracias por su paciencia"
   ></base-loading-modal>
 
@@ -11,7 +11,7 @@
       !chatStore.getServerSendChatsToClientStatus &&
       serverConnectionStore.getConnectionBooleanStatus
     "
-    src="../../public/gif/tortuga bailando.gif"
+    src="/public/gif/tortuga bailando.gif"
     msg="Cargando chats"
   ></base-loading-modal>
 </template>
