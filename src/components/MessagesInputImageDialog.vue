@@ -55,6 +55,7 @@ const chatStore = useChatStore();
 const emits = defineEmits(["emitModal"]);
 
 async function onSubmit() {
+  loading.value = true;
   const senderId = userStore.myUser.nanoId;
   const receiverId = messageStore.receiver;
 
@@ -63,7 +64,6 @@ async function onSubmit() {
   formData.append("receiver", receiverId);
 
   try {
-    loading.value = true;
     const res = await api("/images/image", {
       method: "post",
       data: formData,
@@ -78,8 +78,8 @@ async function onSubmit() {
   } catch (e) {
     console.log(e);
   } finally {
-    loading.value = false;
     myModal.value.style.display = "none";
+    loading.value = false;
     imageUrl.value = null;
   }
 }
