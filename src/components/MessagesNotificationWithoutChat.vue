@@ -1,11 +1,15 @@
 <template>
   <div class="container">
     <q-avatar size="15em">
-      <img src="../../public/gif/tortuga bailando.gif" />
+      <img :src="tortugaImageUrl" />
     </q-avatar>
     <span>¡Sin mensajes, escribe algo a este completo desconocido!</span>
   </div>
 </template>
+
+<script setup>
+import tortugaImageUrl from "../../public/gif/tortuga_bailando.gif";
+</script>
 
 <style scoped>
 .container {

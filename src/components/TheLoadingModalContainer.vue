@@ -1,7 +1,7 @@
 <template>
   <base-loading-modal
     :showing="!serverConnectionStore.getConnectionBooleanStatus"
-    src="/public/gif/tortuga bailando.gif"
+    :src="tortugaImageUrl"
     msg="El servidor gratuito se esta despertando, tardara de 3 a 4 minutos, gracias por su paciencia"
   ></base-loading-modal>
 
@@ -11,13 +11,14 @@
       !chatStore.getServerSendChatsToClientStatus &&
       serverConnectionStore.getConnectionBooleanStatus
     "
-    src="/public/gif/tortuga bailando.gif"
+    :src="tortugaImageUrl"
     msg="Cargando chats"
   ></base-loading-modal>
 </template>
 
 <script setup>
 import BaseLoadingModal from "src/components/BaseLoadingModal.vue";
+import tortugaImageUrl from "../../public/gif/tortuga_bailando.gif";
 
 import { useServerConnectionStore } from "src/stores/serverConnection";
 import { useChatStore } from "src/stores/chat";
