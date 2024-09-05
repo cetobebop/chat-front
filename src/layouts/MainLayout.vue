@@ -18,5 +18,10 @@ import { useRoute } from "vue-router";
 
 const route = useRoute();
 
+window.addEventListener("unload", function () {
+  localStorage.removeItem("chatStore");
+  localStorage.removeItem("messageStore");
+});
+
 socket.connect();
 </script>
