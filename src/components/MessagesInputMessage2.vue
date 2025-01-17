@@ -1,10 +1,7 @@
 <template>
   <div class="container-textarea">
-    <span class="placeholder" style="position: absolute; bottom: 13px"
-      >Escribe un mensaje</span
-    >
+    <span class="placeholder">Escribe un mensaje</span>
     <div
-      style="position: absolute; bottom: 14px"
       @input="onInput"
       @paste="handlePaste"
       ref="textarea"
@@ -124,17 +121,20 @@ function onSubmit() {
 
 .textarea {
   margin-left: 5px;
+  min-height: 35px;
   height: auto;
   width: 80%;
   background-color: #2a3942;
   max-height: 150px;
   overflow-wrap: break-word;
   border: none;
+  position: absolute;
+  bottom: 14px;
   outline: none;
   overflow-y: auto;
   resize: none;
   border-radius: 5px;
-  padding: 9px 15px;
+  padding: 8px 12.8px;
   color: white;
   z-index: 10;
   scrollbar-gutter: stable both-edges;
@@ -144,6 +144,8 @@ function onSubmit() {
 .placeholder {
   margin-left: 5px;
   opacity: 0.7;
+  position: absolute;
+  bottom: 12px;
   z-index: 10;
   padding: 9px 15px;
   pointer-events: none;
@@ -161,12 +163,24 @@ input::placeholder {
 @media (min-width: 1200px) {
   .textarea {
     width: 83%;
+    font-size: 16px;
   }
 }
 
 @media (max-width: 900px) {
   .textarea {
     width: 75%;
+  }
+}
+
+@media (max-width: 700px) {
+  .textarea {
+    width: 71%;
+    padding: 10px 12.8px;
+  }
+
+  .placeholder {
+    bottom: 14px;
   }
 }
 

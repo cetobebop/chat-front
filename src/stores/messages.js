@@ -32,6 +32,18 @@ export const useMessageStore = defineStore(
       }
     }
 
+    function setIndexedChatStreamMessage(idChat, streamMsg) {
+      if (allIndexedChatMessages.value[idChat]) {
+        lastMessagesIndexed.value[idChat] = streamMsg;
+        const msg = allIndexedChatMessages.value[idChat].map((msg) => {
+          if (msg._id === streamMsg._id) msg.content = streamMsg.content;
+        });
+      } else {
+        allIndexedChatMessages.value[idChat] = streamMsg;
+        lastMessagesIndexed.value[idChat] = streamMsg[0];
+      }
+    }
+
     function getLastMessage(idChat) {
       return lastMessagesIndexed.value[idChat];
     }
@@ -156,6 +168,7 @@ export const useMessageStore = defineStore(
       modifyStatus,
       changeMessageStatus,
       addImageToIndexedMessages,
+      setIndexedChatStreamMessage,
     };
   },
   { persist: true }

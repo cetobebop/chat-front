@@ -45,9 +45,7 @@ export const useChatStore = defineStore(
 
     function setNewChat(chat) {
       myChats.value.unshift(chat);
-      socket.emit("client:join-new-chat", chat._id, (res) => {
-        console.log(res);
-      });
+      socket.emit("client:join-new-chat", chat._id, (res) => {});
     }
 
     function setChatSelect(user, chat = undefined) {

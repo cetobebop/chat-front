@@ -3,6 +3,7 @@
     <form ref="form" @submit.prevent="onSubmit">
       <div class="modal-content">
         <span class="close" @click="onClose">&times;</span>
+        {{ Boolean(imageUrl) }}
         <img :src="imageUrl" v-if="imageUrl" />
         <input
           type="file"
@@ -29,6 +30,20 @@
           icon="send"
         ></q-btn>
       </div>
+
+      <q-dialog v-model="alert">
+        <q-card>
+          <q-card-section>
+            <div class="text-h6">Alert</div>
+          </q-card-section>
+
+          <q-card-section class="q-pt-none"> {{ errorMsg }} </q-card-section>
+
+          <q-card-actions align="right">
+            <q-btn flat label="OK" color="primary" v-close-popup />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
     </form>
   </div>
 </template>
@@ -47,6 +62,8 @@ const file = ref(null);
 const imageUrl = ref(null);
 const imageUrlToSave = ref(null);
 const loading = ref(false);
+const alert = ref(false);
+const errorMsg = ref("");
 
 const messageStore = useMessageStore();
 const userStore = useUserStore();
@@ -76,22 +93,26 @@ async function onSubmit() {
 
     messageStore.changeMessageStatus(chatStore.chatSelect?.chat?._id);
   } catch (e) {
-    console.log(e);
+    errorMsg.value = e?.response?.data?.msg ?? "Image error";
+    alert.value = true;
   } finally {
     myModal.value.style.display = "none";
     loading.value = false;
     imageUrl.value = null;
+    file.value.value = null;
   }
 }
 
 function onClose() {
   myModal.value.style.display = "none";
   imageUrl.value = null;
+  file.value.value = null;
 }
 
 function onFilePicked(event) {
   const files = event.target.files;
   const file = files[0];
+  // console.log(file);
   try {
     const fileReader = new FileReader();
     fileReader.addEventListener("load", () => {
