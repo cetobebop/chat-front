@@ -65,7 +65,7 @@ module.exports = configure(function (ctx) {
       env: {
         URL_SERVER: ctx.dev
           ? "http://localhost:3000"
-          : "https://chat-api-z7uu.onrender.com",
+          : "https://chat-api-obo9.onrender.com",
       },
       // rawDefine: {}
       // ignorePublicFolder: true,
