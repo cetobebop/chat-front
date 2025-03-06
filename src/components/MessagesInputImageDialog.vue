@@ -3,7 +3,7 @@
     <form ref="form" @submit.prevent="onSubmit">
       <div class="modal-content">
         <span class="close" @click="onClose">&times;</span>
-        {{ Boolean(imageUrl) }}
+
         <img :src="imageUrl" v-if="imageUrl" />
         <input
           type="file"

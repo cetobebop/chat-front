@@ -11,7 +11,11 @@ const routes = [
       {
         path: "chat",
         component: () => import("pages/ChatPage.vue"),
-        meta: { transition: "animated slideInRight" },
+        meta: {
+          transition: "animated slideInRight",
+          windowWidthLimit: 600,
+          onReloadReturnToMain: true,
+        },
       },
     ],
   },

@@ -1,4 +1,4 @@
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { io } from "socket.io-client";
 import { userEvents } from "./events/user";
 import { roomsEvents } from "./events/chat";
@@ -7,7 +7,7 @@ import { imageEvents } from "./events/image";
 
 import { useServerConnectionStore } from "./stores/serverConnection";
 
-const serverConnectionStore = useServerConnectionStore()
+const serverConnectionStore = useServerConnectionStore();
 
 export const state = ref(null);
 
@@ -21,7 +21,7 @@ export const socket = io(URL, {
 });
 
 socket.on("connect", () => {
-  serverConnectionStore.setConnectionStatus(true)
+  serverConnectionStore.setConnectionStatus(true);
   state.value = true;
 });
 
@@ -35,7 +35,7 @@ messagesEvents(socket);
 imageEvents(socket);
 
 socket.on("connect_error", (err) => {
-  console.log("sin coneccion papi")
-  serverConnectionStore.setConnectionStatus(false)
+  console.log("sin coneccion papi");
+  serverConnectionStore.setConnectionStatus(false);
   // console.log(err.message); // prints the message associated with the error
 });

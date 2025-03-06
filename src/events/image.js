@@ -10,8 +10,6 @@ export function imageEvents(socket) {
     if (!messagesStore) messagesStore = useMessageStore();
     if (!chatStore) chatStore = useChatStore();
 
-    console.log("ejecutado");
-
     const chat = reverseRoles(newChat);
     messagesStore.setAllIndexedChatMessages(newChat._id, [msg]);
     chatStore.setNewChat(chat);

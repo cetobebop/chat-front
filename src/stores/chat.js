@@ -49,7 +49,7 @@ export const useChatStore = defineStore(
     }
 
     function setChatSelect(user, chat = undefined) {
-      console.log("chat seleccionado: ", chat?._id);
+      // console.log("chat seleccionado: ", chat?._id);
 
       chatSelect.value = {
         user,

@@ -120,8 +120,8 @@ function onSubmit() {
 }
 
 .textarea {
-  margin-left: 5px;
-  min-height: 35px;
+  /* margin-left: 5px;
+  min-height: 35px; */
   height: auto;
   width: 80%;
   background-color: #2a3942;
@@ -137,17 +137,17 @@ function onSubmit() {
   padding: 8px 12.8px;
   color: white;
   z-index: 10;
-  scrollbar-gutter: stable both-edges;
+  /* scrollbar-gutter: stable both-edges; */
   box-sizing: border-box;
 }
 
 .placeholder {
-  margin-left: 5px;
+  /* margin-left: 5px; */
   opacity: 0.7;
   position: absolute;
-  bottom: 12px;
+  bottom: 14px;
   z-index: 10;
-  padding: 9px 15px;
+  padding: 8px 12.8px;
   pointer-events: none;
 }
 
@@ -163,7 +163,6 @@ input::placeholder {
 @media (min-width: 1200px) {
   .textarea {
     width: 83%;
-    font-size: 16px;
   }
 }
 
@@ -176,11 +175,6 @@ input::placeholder {
 @media (max-width: 700px) {
   .textarea {
     width: 71%;
-    padding: 10px 12.8px;
-  }
-
-  .placeholder {
-    bottom: 14px;
   }
 }
 
