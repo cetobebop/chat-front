@@ -62,6 +62,7 @@ module.exports = configure(function (ctx) {
 
       // publicPath: '/',
       // analyze: true,
+      //epa
       env: {
         URL_SERVER: ctx.dev
           ? "http://localhost:3000"
